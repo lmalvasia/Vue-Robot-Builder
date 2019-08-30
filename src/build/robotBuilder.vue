@@ -1,6 +1,21 @@
 <template>
   <div class="content">
-    <button class="add-to-cart" @click="addToCart()">Add to cart</button>
+      <div class="preview">
+        <div class="preview-content">
+          <div class="top-row">
+            <img :src="selectedRobot.head.src"/>
+          </div>
+          <div class="middle-row">
+            <img :src="selectedRobot.leftArm.src" class="rotate-left"/>
+            <img :src="selectedRobot.torso.src"/>
+            <img :src="selectedRobot.rightArm.src" class="rotate-right"/>
+          </div>
+          <div class="bottom-row">
+            <img :src="selectedRobot.base.src"/>
+          </div>
+        </div>
+        <button class="add-to-cart" @click="addToCart()">Add to cart</button>
+    </div>
     <div class="top-row">
       <!-- <div class="top part" :style="headBorderStyle"> -->
       <!-- <div class="top part" :style="{border: this.selectedRobot.head.onSale ?
@@ -13,19 +28,39 @@
           {{selectedRobot.head.title}}
           <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
         </div> -->
-      <partSelector :parts="availableParts.heads" position="top" />
+      <partSelector
+        :parts="availableParts.heads"
+        position="top"
+        @partSelected="part => selectedRobot.head=part"
+      />
       <!-- </div> -->
     </div>
     <div class="middle-row">
-      <partSelector :parts="availableParts.arms" :position="'left'" />
+      <partSelector
+        :parts="availableParts.arms"
+        :position="'left'"
+        @partSelected="part => selectedRobot.leftArm=part"
+      />
 <!-- position no tiene : (binding) porque no lo necesita debido a que le pasamos un string derecho.
 Si le pasamos un objeto, como en el caso de parts, es necesario el :
 Podemos agregar el : y pasarlo como el anterior -->
-      <partSelector :parts="availableParts.torsos" position="center" />
-      <partSelector :parts="availableParts.arms" position="right" />
+      <partSelector
+        :parts="availableParts.torsos"
+        position="center"
+        @partSelected="part => selectedRobot.torso=part"
+      />
+      <partSelector
+        :parts="availableParts.arms"
+        position="right"
+        @partSelected="part => selectedRobot.rightArm=part"
+      />
     </div>
     <div class="bottom-row">
-      <partSelector :parts="availableParts.bases" position="bottom" />
+      <partSelector
+        :parts="availableParts.bases"
+        position="bottom"
+        @partSelected="part => selectedRobot.base=part"
+      />
     </div>
     <div>
       <h1>Cart</h1>
@@ -202,8 +237,7 @@ export default {
 }
 .add-to-cart {
   position: absolute;
-  right: -150px;
-  width: 200px;
+  width: 210px;
   padding: 3px;
   font-size: 16px;
 }
@@ -218,5 +252,26 @@ td, th {
 }
 .sale-border {
   border: 3px solid red;
+}
+.preview {
+  position: absolute;
+  top: -30px;
+  right: -230px;
+  width: 210px;
+  height: 210px;
+  padding: 5px;
+}
+.preview-content {
+  border: 1px solid #999;
+}
+.preview img {
+  width: 50px;
+  height: 50px;
+}
+.rotate-right {
+  transform: rotate(90deg);
+}
+.rotate-left {
+  transform: rotate(-90deg);
 }
 </style>
