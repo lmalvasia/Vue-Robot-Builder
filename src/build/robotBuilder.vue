@@ -1,19 +1,22 @@
 <template>
   <div class="content">
       <div class="preview">
-        <div class="preview-content">
-          <div class="top-row">
-            <img :src="selectedRobot.head.src"/>
+        <CollapsibleSection>
+          <div class="preview-content">
+            <div class="top-row">
+              <img :src="selectedRobot.head.src"/>
+            </div>
+            <div class="middle-row">
+              <img :src="selectedRobot.leftArm.src" class="rotate-left"/>
+              <img :src="selectedRobot.torso.src"/>
+              <img :src="selectedRobot.rightArm.src" class="rotate-right"/>
+            </div>
+            <div class="bottom-row">
+              <img :src="selectedRobot.base.src"/>
+            </div>
           </div>
-          <div class="middle-row">
-            <img :src="selectedRobot.leftArm.src" class="rotate-left"/>
-            <img :src="selectedRobot.torso.src"/>
-            <img :src="selectedRobot.rightArm.src" class="rotate-right"/>
-          </div>
-          <div class="bottom-row">
-            <img :src="selectedRobot.base.src"/>
-          </div>
-        </div>
+        </CollapsibleSection>
+        <CollapsibleSection></CollapsibleSection>
         <button class="add-to-cart" @click="addToCart()">Add to cart</button>
     </div>
     <div class="top-row">
@@ -95,11 +98,13 @@ agregar un nuevo elemento, performa mejor, anda mejor, etc. -->
 import availableParts from '../data/parts';
 import createdHookMixing from './created-hook-mixing';
 import partSelector from './partSelector.vue';
+import CollapsibleSection from '../shared/CollapsibleSection.vue';
 
 export default {
   name: 'RobotBuilder',
   components: {
     partSelector,
+    CollapsibleSection,
   },
   data() {
     return {
