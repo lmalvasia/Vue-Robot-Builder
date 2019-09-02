@@ -21,9 +21,14 @@
         </ul>
       </nav>
     </header>
-    <main>
+    <div class="container">
+      <aside class="aside">
+        <router-view name="sidebar"/>
+      </aside>
+      <main>
       <router-view />
     </main>
+    </div>
   </div>
 </template>
 
@@ -50,15 +55,14 @@ body {
   align-items: center;
 }
 main {
-  display: flex;
   justify-content: center;
   background-color: #FFF;
   padding: 30px 0px;
-  width: 70%;
+  width: 90%;
 }
 header {
   display: flex;
-  width: 70%;
+  width: 80%;
   background-color: #999;
   margin-bottom: 20px;
 }
@@ -85,5 +89,17 @@ ul {
 }
 .activePage { /* es posible cambiarlo */
   color:white;
+}
+.container {
+  display: flex;
+  margin: 10px auto 0 auto;
+  justify-content: center;
+  width: 80%;
+}
+.aside {
+  padding: 30px;
+  background-color: #aaa;
+  width: 10%;
+  min-height: 300px;
 }
 </style>
