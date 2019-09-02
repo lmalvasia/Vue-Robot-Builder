@@ -1,86 +1,88 @@
 <template>
   <div class="content">
-      <div class="preview">
-        <CollapsibleSection>
-          <div class="preview-content">
-            <div class="top-row">
-              <img :src="selectedRobot.head.src"/>
-            </div>
-            <div class="middle-row">
-              <img :src="selectedRobot.leftArm.src" class="rotate-left"/>
-              <img :src="selectedRobot.torso.src"/>
-              <img :src="selectedRobot.rightArm.src" class="rotate-right"/>
-            </div>
-            <div class="bottom-row">
-              <img :src="selectedRobot.base.src"/>
-            </div>
+    <div class="preview">
+      <CollapsibleSection>
+        <div class="preview-content">
+          <div class="top-row">
+            <img :src="selectedRobot.head.src"/>
           </div>
-        </CollapsibleSection>
-        <CollapsibleSection></CollapsibleSection>
-        <button class="add-to-cart" @click="addToCart()">Add to cart</button>
+          <div class="middle-row">
+            <img :src="selectedRobot.leftArm.src" class="rotate-left"/>
+            <img :src="selectedRobot.torso.src"/>
+            <img :src="selectedRobot.rightArm.src" class="rotate-right"/>
+          </div>
+          <div class="bottom-row">
+            <img :src="selectedRobot.base.src"/>
+          </div>
+        </div>
+      </CollapsibleSection>
+      <CollapsibleSection></CollapsibleSection>
+      <button class="add-to-cart" @click="addToCart()">Add to cart</button>
     </div>
-    <div class="top-row">
-      <!-- <div class="top part" :style="headBorderStyle"> -->
-      <!-- <div class="top part" :style="{border: this.selectedRobot.head.onSale ?
-      '3px solid red' : '3px solid grey'}"> Es posible pasar el estilo de esta forma -->
-      <!-- <div class="top part" :class="{'sale-border': selectedRobot.head.onSale}">
-      Si selectedRobot.head.onSale es true, le paso sale border -->
-      <!-- <div class="top part" :class="[saleBorderClass]"> Paso la propiedad saleBorderClass -->
-      <!-- <div :class="[saleBorderClass, 'top', 'part']"> -->
-        <!-- <div class="robot-name">
-          {{selectedRobot.head.title}}
-          <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
-        </div> -->
-      <partSelector
-        :parts="availableParts.heads"
-        position="top"
-        @partSelected="part => selectedRobot.head=part"
-      />
-      <!-- </div> -->
-    </div>
-    <div class="middle-row">
-      <partSelector
-        :parts="availableParts.arms"
-        :position="'left'"
-        @partSelected="part => selectedRobot.leftArm=part"
-      />
+    <div class="robot">
+      <div class="top-row">
+        <!-- <div class="top part" :style="headBorderStyle"> -->
+        <!-- <div class="top part" :style="{border: this.selectedRobot.head.onSale ?
+        '3px solid red' : '3px solid grey'}"> Es posible pasar el estilo de esta forma -->
+        <!-- <div class="top part" :class="{'sale-border': selectedRobot.head.onSale}">
+        Si selectedRobot.head.onSale es true, le paso sale border -->
+        <!-- <div class="top part" :class="[saleBorderClass]"> Paso la propiedad saleBorderClass -->
+        <!-- <div :class="[saleBorderClass, 'top', 'part']"> -->
+          <!-- <div class="robot-name">
+            {{selectedRobot.head.title}}
+            <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
+          </div> -->
+        <partSelector
+          :parts="availableParts.heads"
+          position="top"
+          @partSelected="part => selectedRobot.head=part"
+        />
+        <!-- </div> -->
+      </div>
+      <div class="middle-row">
+        <partSelector
+          :parts="availableParts.arms"
+          :position="'left'"
+          @partSelected="part => selectedRobot.leftArm=part"
+        />
 <!-- position no tiene : (binding) porque no lo necesita debido a que le pasamos un string derecho.
 Si le pasamos un objeto, como en el caso de parts, es necesario el :
 Podemos agregar el : y pasarlo como el anterior -->
-      <partSelector
-        :parts="availableParts.torsos"
-        position="center"
-        @partSelected="part => selectedRobot.torso=part"
-      />
-      <partSelector
-        :parts="availableParts.arms"
-        position="right"
-        @partSelected="part => selectedRobot.rightArm=part"
-      />
-    </div>
-    <div class="bottom-row">
-      <partSelector
-        :parts="availableParts.bases"
-        position="bottom"
-        @partSelected="part => selectedRobot.base=part"
-      />
-    </div>
-    <div>
-      <h1>Cart</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Robot</th>
-            <th class="cost">Cost</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(robot, index) in cart" :key="index">
-            <td>{{robot.head.title}}</td>
-            <td class="cost">{{robot.cost}}</td>
-          </tr>
-        </tbody>
-      </table>
+        <partSelector
+          :parts="availableParts.torsos"
+          position="center"
+          @partSelected="part => selectedRobot.torso=part"
+        />
+        <partSelector
+          :parts="availableParts.arms"
+          position="right"
+          @partSelected="part => selectedRobot.rightArm=part"
+        />
+      </div>
+      <div class="bottom-row">
+        <partSelector
+          :parts="availableParts.bases"
+          position="bottom"
+          @partSelected="part => selectedRobot.base=part"
+        />
+      </div>
+      <div>
+        <h1>Cart</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Robot</th>
+              <th class="cost">Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(robot, index) in cart" :key="index">
+              <td>{{robot.head.title}}</td>
+              <td class="cost">{{robot.cost}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -238,7 +240,9 @@ export default {
   color:red;
 }
 .content {
-  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
 }
 .add-to-cart {
   position: absolute;
@@ -259,9 +263,6 @@ td, th {
   border: 3px solid red;
 }
 .preview {
-  position: absolute;
-  top: -30px;
-  right: -230px;
   width: 210px;
   height: 210px;
   padding: 5px;
@@ -278,5 +279,9 @@ td, th {
 }
 .rotate-left {
   transform: rotate(-90deg);
+}
+.robot {
+  display: flex;
+  flex-direction: column;
 }
 </style>
