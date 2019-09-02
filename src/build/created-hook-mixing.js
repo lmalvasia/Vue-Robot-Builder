@@ -1,8 +1,8 @@
 export default {
   created() {
-    console.log('component created!');
+    // console.log('component created!');
   },
   updated() {
-    console.log('component updated!');
+    // console.log('component updated!');
   },
 };
