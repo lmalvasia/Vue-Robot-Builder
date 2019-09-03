@@ -66,23 +66,6 @@ Podemos agregar el : y pasarlo como el anterior -->
           @partSelected="part => selectedRobot.base=part"
         />
       </div>
-      <div>
-        <h1>Cart</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Robot</th>
-              <th class="cost">Cost</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(robot, index) in cart" :key="index">
-              <td>{{robot.head.title}}</td>
-              <td class="cost">{{robot.cost}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </div>
   </div>
 </template>
@@ -146,7 +129,7 @@ export default {
       const robot = this.selectedRobot;
       const cost = robot.head.cost + robot.leftArm.cost + robot.rightArm.cost
       + robot.torso.cost + robot.base.cost;
-      this.cart.push(Object.assign({}, robot, { cost }));
+      this.$store.commit('addRobotToCart', Object.assign({}, robot, { cost }));
       this.addedToCart = true;
     },
   },
@@ -265,11 +248,6 @@ export default {
 .cost {
   color: red;
   text-align: right;
-}
-td, th {
-  text-align: left;
-  padding: 5px;
-  padding-right: 20px;
 }
 .sale-border {
   border: 3px solid red;

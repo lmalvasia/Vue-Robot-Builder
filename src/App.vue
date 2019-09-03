@@ -18,6 +18,14 @@
               Build
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link active-class="activePage" class="nav-link" :to="{name: 'Cart'}" exact>
+              Cart
+            </router-link>
+            <div class="cart-items">
+              {{cart.length}}
+            </div>
+          </li>
         </ul>
       </nav>
     </header>
@@ -37,6 +45,11 @@
 <script>
 export default {
   name: 'app',
+  computed: {
+    cart() {
+      return this.$store.state.cart;
+    },
+  },
 };
 </script>
 
@@ -101,5 +114,13 @@ ul {
   background-color: #aaa;
   width: 10%;
   min-height: 300px;
+}
+.cart-items {
+  font-size: 18px;
+  width: 20px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 100px;
+  background-color: mediumseagreen;
 }
 </style>
