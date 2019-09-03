@@ -10,10 +10,11 @@
 </template>
 
 <script>
-import parts from '../data/parts';
+import mixin from './mixin';
 
 export default {
   name: 'PartInfo',
+  mixins: [mixin],
   props: {
     partType: { type: String },
     id: {
@@ -24,7 +25,7 @@ export default {
   computed: {
     part() {
       const { partType, id } = this; // this props
-      return parts[partType].find(part => part.id === +id);
+      return this.parts[partType].find(part => part.id === +id);
     },
   },
 };

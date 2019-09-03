@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div v-if="availableParts" class="content">
     <div class="preview">
       <CollapsibleSection>
         <div class="preview-content">
@@ -80,13 +80,15 @@ el elemento. Utilizar v-show cuando tenemos que renderizar mucho contenido, de e
 agregar un nuevo elemento, performa mejor, anda mejor, etc. -->
 
 <script>
-import availableParts from '../data/parts';
 import createdHookMixing from './created-hook-mixing';
 import partSelector from './partSelector.vue';
 import CollapsibleSection from '../shared/CollapsibleSection.vue';
 
 export default {
   name: 'RobotBuilder',
+  created() {
+    this.$store.dispatch('getParts');
+  },
   beforeRouteLeave(to, from, next) {
     if (this.addedToCart) {
       next(true);
@@ -103,7 +105,6 @@ export default {
   },
   data() {
     return {
-      availableParts,
       cart: [],
       addedToCart: false,
       selectedRobot: {
@@ -117,6 +118,9 @@ export default {
   },
   mixins: [createdHookMixing],
   computed: { // We are using computed properties, so we can replace complex expression with them.
+    availableParts() {
+      return this.$store.state.parts;
+    },
     saleBorderClass() {
       return this.selectedRobot.head.onSale ? 'sale-border' : '';
     },
