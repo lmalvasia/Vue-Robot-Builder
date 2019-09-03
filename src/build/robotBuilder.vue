@@ -87,7 +87,7 @@ import CollapsibleSection from '../shared/CollapsibleSection.vue';
 export default {
   name: 'RobotBuilder',
   created() {
-    this.$store.dispatch('getParts');
+    this.$store.dispatch('robots/getParts');
   },
   beforeRouteLeave(to, from, next) {
     if (this.addedToCart) {
@@ -119,7 +119,7 @@ export default {
   mixins: [createdHookMixing],
   computed: { // We are using computed properties, so we can replace complex expression with them.
     availableParts() {
-      return this.$store.state.parts;
+      return this.$store.state.robots.parts;
     },
     saleBorderClass() {
       return this.selectedRobot.head.onSale ? 'sale-border' : '';
@@ -133,7 +133,7 @@ export default {
       const robot = this.selectedRobot;
       const cost = robot.head.cost + robot.leftArm.cost + robot.rightArm.cost
       + robot.torso.cost + robot.base.cost;
-      this.$store.dispatch('addRobotToCart', Object.assign({}, robot, { cost }))
+      this.$store.dispatch('robots/addRobotToCart', Object.assign({}, robot, { cost }))
         .then(() => this.$router.push('/cart'));
       this.addedToCart = true;
     },
