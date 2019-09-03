@@ -80,6 +80,7 @@ el elemento. Utilizar v-show cuando tenemos que renderizar mucho contenido, de e
 agregar un nuevo elemento, performa mejor, anda mejor, etc. -->
 
 <script>
+import { mapActions /* ,mapMutations */ } from 'vuex';
 import createdHookMixing from './created-hook-mixing';
 import partSelector from './partSelector.vue';
 import CollapsibleSection from '../shared/CollapsibleSection.vue';
@@ -87,7 +88,7 @@ import CollapsibleSection from '../shared/CollapsibleSection.vue';
 export default {
   name: 'RobotBuilder',
   created() {
-    this.$store.dispatch('robots/getParts');
+    this.getParts();
   },
   beforeRouteLeave(to, from, next) {
     if (this.addedToCart) {
@@ -129,11 +130,16 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      getParts: 'robots/getParts',
+      addRobotToCart: 'robots/addRobotToCart',
+    }),
+    // ...mapMutations('robots', ['someMutations']),
     addToCart() {
       const robot = this.selectedRobot;
       const cost = robot.head.cost + robot.leftArm.cost + robot.rightArm.cost
       + robot.torso.cost + robot.base.cost;
-      this.$store.dispatch('robots/addRobotToCart', Object.assign({}, robot, { cost }))
+      this.addRobotToCart(Object.assign({}, robot, { cost }))
         .then(() => this.$router.push('/cart'));
       this.addedToCart = true;
     },
